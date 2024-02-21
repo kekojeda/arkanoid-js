@@ -40,9 +40,11 @@
         let dy = -2
 
         function drawBall(){
-            // 
-
-
+            ctx.beginPath()
+            ctx.arc(x,y, ballRadius, 0, Math.PI * 2)
+            ctx.fillStyle = '#fff'
+            ctx.fill()
+            ctx.closePath()
         }
 
         function drawPaddle(){
@@ -54,10 +56,28 @@
         }
 
         function collisionDetection(){
+            // rebotar pelota en laterales
+
             
         }
 
         function ballMovement(){
+            // rebotar la pelota en lateral
+            if( 
+                x + dx > canvas.width - ballRadius ||
+                x + dx < ballRadius){
+                dx = -dx
+            }
+
+            //rebotar en superior
+            if( y + dy < ballRadius){
+                dy = -dy
+            }
+
+
+            x += dx
+            y += dy
+
             
         }
 
@@ -65,7 +85,13 @@
             
         }
 
+        function cleanCanvas(){
+            ctx.clearRect(0,0, canvas.width, canvas.height)
+        }
+
         function draw(){
+            //limpiar la pantalla
+            cleanCanvas()
             // dibujar los elementos
             drawBall()
             drawPaddle()
