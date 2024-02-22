@@ -45,9 +45,11 @@
         let rigthPressed = false
         let leftPressed = false
 
+        const PADDEL_SENSITIVITY= 7
+
         //velocidad de la pelota
-        let dx = 2
-        let dy = -2
+        let dx = 3
+        let dy = -3
 
         function drawBall(){
             ctx.beginPath()
@@ -88,7 +90,22 @@
                 dy = -dy
             }
 
-
+            // la pelota toca la pala
+            const ballIsSameXAsPaddle = 
+                x > paddleX &&
+                x < paddleX + paddleWidth
+            const ballIsSameYAsPaddle = 
+                y > paddleY &&
+                y < paddleY + paddleHeight
+            if(ballIsSameXAsPaddle && ballIsSameYAsPaddle){
+                dy = -dy
+            }else if( // la pelota toca el suelo
+                y + dy > canvas.height - ballRadius
+                ){
+                console.log('Game Over')
+                document.location.reload()
+            }
+            // mover la pelota
             x += dx
             y += dy
 
@@ -96,11 +113,11 @@
         }
 
         function padleMovement(){
-            if(rigthPressed){
-                paddleX ++
+            if(rigthPressed && paddleX < canvas.width - paddleWidth){
+                paddleX += PADDEL_SENSITIVITY
 
-            }else if(leftPressed){
-                paddleY ++
+            }else if(leftPressed && paddleX>0){
+                paddleX -= PADDEL_SENSITIVITY
 
             }
 
