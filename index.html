@@ -35,6 +35,16 @@
         let x = canvas.width / 2
         let y = canvas.height - 30
 
+        /* Variables del paddle */
+        const paddleWidth = 100;
+        const paddleHeight = 10;
+
+        let paddleX = (canvas.width - paddleWidth ) / 2;
+        let paddleY = canvas.height - 25;
+
+        let rigthPressed = false
+        let leftPressed = false
+
         //velocidad de la pelota
         let dx = 2
         let dy = -2
@@ -48,7 +58,11 @@
         }
 
         function drawPaddle(){
-            
+            /*ctx.beginPath()
+            ctx.rect(paddleX,paddleY, paddleWidth, paddleHeight)
+            ctx.fill()*/
+            ctx.fillStyle = '#09f'
+            ctx.fillRect(paddleX,paddleY, paddleWidth, paddleHeight)
         }
 
         function drawBricks(){
@@ -82,11 +96,43 @@
         }
 
         function padleMovement(){
+            if(rigthPressed){
+                paddleX ++
+
+            }else if(leftPressed){
+                paddleY ++
+
+            }
+
+
             
         }
 
         function cleanCanvas(){
             ctx.clearRect(0,0, canvas.width, canvas.height)
+        }
+
+        function initEvents (){
+            document.addEventListener('keydown', keyDownHandler)
+            document.addEventListener('keyup', keyUpHandler)
+
+            function keyDownHandler(event){
+                const {key} = event
+                if ( key === 'right' || key === 'ArrowRight'){
+                    rigthPressed = true
+                }else if ( key === 'left' || key === 'ArrowLeft'){
+                    leftPressed = true
+                }
+            }
+
+            function keyUpHandler(event){
+                const {key} = event
+                if ( key === 'right' || key === 'ArrowRight'){
+                    rigthPressed = false
+                }else if ( key === 'left' || key === 'ArrowLeft'){
+                    leftPressed = false
+                }
+            }
         }
 
         function draw(){
@@ -109,6 +155,7 @@
         }
 
         draw()
+        initEvents()
 
     </script>
 </body>
